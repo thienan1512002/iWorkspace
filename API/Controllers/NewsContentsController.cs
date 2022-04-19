@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain;
 using Persistence;
 using API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -25,16 +26,14 @@ namespace API.Controllers
         }
 
         // GET: api/NewsContents
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<NewsContent>>> GetNewsContents(int id)
         {
             return await _context.NewsContents.Where(m => m.NewsHeaderId == id).ToListAsync();
         }
 
-
-
-        // PUT: api/NewsContents/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutNewsContent(int id, [FromForm] NewsContent newsContent)
         {
@@ -70,9 +69,9 @@ namespace API.Controllers
             return NoContent();
         }
 
-
-        [HttpPut("DnD/{id}")]
-        public async Task<IActionResult> DnDUpdate(int id, NewsContent content)
+        [Authorize]
+        [HttpPut("increase/{id}")]
+        public async Task<IActionResult> DnDUpdate(int id)
         {
             if (id == 0)
             {
@@ -84,37 +83,32 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            model.Sequence = content.Sequence;
+            model.Sequence++;
+            var current = await _context.NewsContents.FirstOrDefaultAsync(m => m.Sequence == model.Sequence + 1);
+            current.Sequence--;
             _context.NewsContents.Update(model);
             await _context.SaveChangesAsync();
-
+            _context.NewsContents.Update(current);
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
-        // [HttpPost("img")]
-        // public async Task<ActionResult<NewsContentDTO>> PostImgContent([FromForm] NewsContentDTO newsContentDTO)
-        // {
-        //     NewsContent newsContent = new NewsContent();
-        //     newsContent.NewsId = newsContentDTO.NewsId;
-        //     newsContent.Content = await SaveImage(newsContentDTO.ImageFiles);
-        //     newsContent.Sequence = _context.NewsContents.Count(m => m.NewsId == newsContent.NewsId);
-        //     newsContent.ContentDate = DateTime.Now;
-        //     newsContent.ContentType = "img";
-        //     newsContent.ContentUser = newsContentDTO.ContentUser;
-        //     _context.NewsContents.Add(newsContent);
-        //     await _context.SaveChangesAsync();
-        //     return Ok(newsContent);
-        // }
+        [Authorize]
         [HttpPost]
-        public async Task<ActionResult<NewsContent>> PostTextContent(NewsContent newsContent)
+        public async Task<ActionResult<NewsContentDTO>> PostImgContent([FromForm] NewsContentDTO newsContentDTO)
         {
-            newsContent.ContentDate = DateTime.Now;
-            newsContent.NewsHeaderId = 1;
+            NewsContent newsContent = new NewsContent();
+            newsContent.NewsHeaderId = newsContentDTO.NewsHeaderId;
+            newsContent.Content = await SaveImage(newsContentDTO.ImageFiles);
             newsContent.Sequence = _context.NewsContents.Count(m => m.NewsHeaderId == newsContent.NewsHeaderId);
+            newsContent.ContentDate = DateTime.Now;
+            newsContent.ContentType = "img";
+            newsContent.ContentUser = newsContentDTO.ContentUser;
             _context.NewsContents.Add(newsContent);
             await _context.SaveChangesAsync();
             return Ok(newsContent);
         }
+
         [NonAction]
         public async Task<string> SaveImage(IFormFile imageFile)
         {
@@ -128,6 +122,7 @@ namespace API.Controllers
             return imageName;
         }
         // DELETE: api/NewsContents/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNewsContent(int id)
         {

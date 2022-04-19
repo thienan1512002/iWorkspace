@@ -3,7 +3,7 @@ namespace API.DTOs
     public class NewsContentDTO
     {
         public int Id { get; set; }
-        public int NewsId { get; set; }
+        public int NewsHeaderId { get; set; }
         public int Sequence { get; set; }
         public string Content { get; set; }
         public string ContentType { get; set; }

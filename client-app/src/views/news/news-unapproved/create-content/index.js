@@ -16,8 +16,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const url = "https://localhost:5001/api/text/";
-
+const urlImg = "https://localhost:5001/api/newscontents/";
 function CreateNewsContent() {
+  const user = useAuth();
   const { id } = useParams();
   const [open, setOpen] = useState(true);
   const [contentType, setContentType] = useState("");
@@ -31,34 +32,29 @@ function CreateNewsContent() {
       .post(url, {
         content: txtContent,
         newsHeaderId: id,
-        contentUser: "An",
+        contentUser: user.user.name,
         contentType: contentType,
       })
       .then((result) => {
-        if (result.status === 201) {
+        if (result.status === 200) {
           toast.success("Add new Text Content Success");
           setDisable(false);
           setTxtContent("");
-        } else {
-          toast.error("Something error !");
         }
+      })
+      .catch((error) => {
+        toast.error("Something error");
       });
   };
 
   const handleImageContent = (e) => {
-    const today = new Date();
     e.preventDefault();
     let formData = new FormData();
-    formData.append("imageFile", file);
-    formData.append("content", file.name);
-    formData.append("newsId", id);
+    formData.append("imageFiles", file);
+    formData.append("newsHeaderId", id);
     formData.append("contentType", contentType);
-    formData.append(
-      "contentDate",
-      today.getYear() + "-" + today.getMonth() + "-" + today.getDate()
-    );
-    formData.append("contentUser", "An");
-    axios.post(url + "img/", formData).then((res) => {
+    formData.append("contentUser", user.user.name);
+    axios.post(urlImg, formData).then((res) => {
       if (res.status === 200) {
         toast.success("Add new Image Content Success");
         setDisable(false);

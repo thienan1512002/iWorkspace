@@ -1,6 +1,5 @@
 import * as React from "react";
 import axios from "utils/axios";
-import useAuth from "hooks/useAuth";
 import CardNews from "./Card";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +7,6 @@ const url = "https://localhost:5001/api/NewsHeaders";
 
 function News() {
   const [news, setNews] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
-  const [txtTitle, setTitle] = React.useState("");
-  const [txtDesc, setDesc] = React.useState("");
-  const [show, setShow] = React.useState(false);
-  const user = useAuth();
   const redirect = useNavigate();
   React.useEffect(() => {
     loadData();

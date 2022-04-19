@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Domain;
 using Persistence;
 using API.DTOs;
+using Microsoft.AspNetCore.Authorization;
+
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -20,6 +22,7 @@ namespace API.Controllers
             _context = context;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IEnumerable<NewsHeader>> GetNews()
         {
@@ -36,6 +39,7 @@ namespace API.Controllers
                        };
             return await data.ToListAsync();
         }
+        [Authorize]
         [HttpGet("{id}")]
         public IQueryable<NewsHeader> GetNewsDetails(int id)
         {

@@ -36,7 +36,7 @@ function Content() {
                 if (item.contentType === "img") {
                   return (
                     <img
-                      src={"http://localhost:5001/Images/" + content.content}
+                      src={"https://localhost:5001/Images/" + item.content}
                       className="imgCenter"
                       style={{
                         display: "block",
