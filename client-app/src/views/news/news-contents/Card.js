@@ -16,11 +16,7 @@ function CardNews(props) {
     newsTitle,
     newsDesc,
     newsDate,
-    newsUser,
-    toggleApprove,
-    approved,
-    isFinished,
-    checkFinished,
+    newsUser,          
     seeDetails,
   } = props;
 
@@ -35,6 +31,7 @@ function CardNews(props) {
           justifyContent: "space-between",
           flexDirection: "column",
         }}
+        onClick={seeDetails}
       >
         <CardContent>
           <Typography
@@ -59,42 +56,7 @@ function CardNews(props) {
             Người đăng : {newsUser}
           </Typography>
         </CardContent>
-        <CardActions sx={{ justifyContent: "center", mt: 5 }}>
-          <Button
-            size="medium"
-            color={approved === true ? "error" : "success"}
-            variant="contained"
-            onClick={toggleApprove}
-            disabled={!isFinished}
-          >
-            {approved === true ? <UpdateDisabledIcon /> : <HowToRegIcon />}
-          </Button>
-          <Button
-            size="medium"
-            color="success"
-            variant="contained"
-            disabled={isFinished}
-            onClick={checkFinished}
-          >
-            <CheckCircleIcon />
-          </Button>
-          <Button
-            size="medium"
-            color="info"
-            variant="contained"
-            onClick={seeDetails}
-          >
-            <InfoIcon />
-          </Button>
-          <Button
-            size="medium"
-            color="warning"
-            variant="contained"
-            disabled={isFinished}
-          >
-            <ModeEditOutlineIcon />
-          </Button>
-        </CardActions>
+       
       </Card>
     </>
   );

@@ -33,7 +33,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NewsId = table.Column<int>(type: "INTEGER", nullable: false),
+                    NewsHeaderId = table.Column<int>(type: "INTEGER", nullable: false),
                     Sequence = table.Column<int>(type: "INTEGER", nullable: false),
                     Content = table.Column<string>(type: "nvarchar", nullable: false, maxLength: 3000),
                     ContentType = table.Column<string>(type: "TEXT", nullable: false),
@@ -45,7 +45,7 @@ namespace Persistence.Migrations
                     table.PrimaryKey("PK_NewsContents", x => x.Id);
                     table.ForeignKey(
                         name: "FK_NewsContents_NewsHeaders_NewsId",
-                        column: x => x.NewsId,
+                        column: x => x.NewsHeaderId,
                         principalTable: "NewsHeaders",
                         principalColumn: "Id");
                         //onDelete: ReferentialAction.Cascade);

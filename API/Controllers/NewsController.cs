@@ -32,7 +32,7 @@ namespace API.Controllers
                            NewsDate = h.NewsDate,
                            Approved = h.Approved,
                            NewsUser = h.NewsUser,
-                           NewsContents = _context.NewsContents.Where(m => m.NewsId == h.Id).ToList()
+                           NewsContents = _context.NewsContents.Where(m => m.NewsHeaderId == h.Id).ToList()
                        };
             return await data.ToListAsync();
         }
@@ -49,7 +49,7 @@ namespace API.Controllers
                            NewsDate = h.NewsDate,
                            Approved = h.Approved,
                            NewsUser = h.NewsUser,
-                           NewsContents = _context.NewsContents.Where(m => m.NewsId == h.Id).ToList()
+                           NewsContents = _context.NewsContents.Where(m => m.NewsHeaderId == h.Id).ToList()
                        };
             return data;
         }

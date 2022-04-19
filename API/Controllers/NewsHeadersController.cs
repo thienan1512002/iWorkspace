@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Domain;
 using Persistence;
 using API.DTOs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -23,6 +24,7 @@ namespace API.Controllers
         }
 
         // GET: api/NewsHeaders
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NewsHeader>>> GetNewsHeaders()
         {
@@ -30,6 +32,7 @@ namespace API.Controllers
         }
 
         // GET: api/NewsHeaders/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<NewsHeader>> GetNewsHeader(int id)
         {
@@ -43,7 +46,7 @@ namespace API.Controllers
             return newsHeader;
         }
 
-
+        [Authorize]
         [HttpPut("toggled-finished/{id}")]
         public async Task<IActionResult> PutNewsHeader(int id)
         {
@@ -74,6 +77,7 @@ namespace API.Controllers
 
             return Ok(newsHeader);
         }
+        [Authorize]
         [HttpPut("toggle-approved/{id}")]
         public async Task<IActionResult> Approved(int id)
         {
@@ -106,6 +110,7 @@ namespace API.Controllers
         }
 
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<NewsHeader>> PostNewsHeader([FromBody] NewsHeaderDTO newsHeaderDTO)
         {
@@ -125,7 +130,7 @@ namespace API.Controllers
 
 
 
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNewsHeader(int id)
         {

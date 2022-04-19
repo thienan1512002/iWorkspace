@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Http;
 namespace Domain
 {
-    public class NewsContent
+    public partial class NewsContent
     {
 
         public int Id { get; set; }
         [ForeignKey("NewsHeader")]
-        public int NewsId { get; set; }
+        public int NewsHeaderId { get; set; }
         public int Sequence { get; set; }
 
         public string Content { get; set; }
@@ -17,7 +17,7 @@ namespace Domain
 
         public string ContentUser { get; set; }
 
-        public NewsHeader News { get; set; }
+        //public virtual NewsHeader News { get; set; }
         public DateTime ContentDate { get; set; }
 
 

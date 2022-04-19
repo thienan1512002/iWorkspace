@@ -13,7 +13,11 @@ const DashboardPage2 = Loadable(
 const NewsUnApproved = Loadable(
   lazy(() => import("views/news/news-unapproved/"))
 );
-
+const NewsDetails = Loadable(lazy(() => import("views/news/news-details/")));
+const NewsContent = Loadable(lazy(() => import("views/news/news-contents/")));
+const CreateContent = Loadable(
+  lazy(() => import("views/news/news-unapproved/create-content/"))
+);
 // ==============================|| MAIN ROUTING ||============================== //
 const MainRoutes = {
   path: "/",
@@ -34,6 +38,18 @@ const MainRoutes = {
     {
       path: "/news/news-unapproved",
       element: <NewsUnApproved />,
+    },
+    {
+      path: "/news/news-contents",
+      element: <NewsContent />,
+    },
+    {
+      path: "/news/news-details/:id",
+      element: <NewsDetails />,
+    },
+    {
+      path: "/news/news-unapproved/create-content/:id",
+      element: <CreateContent />,
     },
   ],
 };

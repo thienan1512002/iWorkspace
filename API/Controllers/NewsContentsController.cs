@@ -28,7 +28,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<NewsContent>>> GetNewsContents(int id)
         {
-            return await _context.NewsContents.Where(m => m.NewsId == id).ToListAsync();
+            return await _context.NewsContents.Where(m => m.NewsHeaderId == id).ToListAsync();
         }
 
 
@@ -44,7 +44,7 @@ namespace API.Controllers
                 return BadRequest();
             }
             //newsContent.Content = await SaveImage(newsContent.ImageFile);
-            newsContent.NewsId = 1;
+            newsContent.NewsHeaderId = 1;
             newsContent.ContentDate = DateTime.Now;
             newsContent.ContentType = "img";
             newsContent.Sequence = 1;
@@ -90,34 +90,30 @@ namespace API.Controllers
 
             return NoContent();
         }
-        // POST: api/NewsContents
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("/img")]
-        public async Task<ActionResult<NewsContentDTO>> PostImgContent([FromForm] NewsContentDTO newsContentDTO)
+
+        // [HttpPost("img")]
+        // public async Task<ActionResult<NewsContentDTO>> PostImgContent([FromForm] NewsContentDTO newsContentDTO)
+        // {
+        //     NewsContent newsContent = new NewsContent();
+        //     newsContent.NewsId = newsContentDTO.NewsId;
+        //     newsContent.Content = await SaveImage(newsContentDTO.ImageFiles);
+        //     newsContent.Sequence = _context.NewsContents.Count(m => m.NewsId == newsContent.NewsId);
+        //     newsContent.ContentDate = DateTime.Now;
+        //     newsContent.ContentType = "img";
+        //     newsContent.ContentUser = newsContentDTO.ContentUser;
+        //     _context.NewsContents.Add(newsContent);
+        //     await _context.SaveChangesAsync();
+        //     return Ok(newsContent);
+        // }
+        [HttpPost]
+        public async Task<ActionResult<NewsContent>> PostTextContent(NewsContent newsContent)
         {
-            NewsContent newsContent = new NewsContent();
-            newsContent.NewsId = newsContentDTO.NewsId;
-            newsContent.Content = await SaveImage(newsContentDTO.ImageFiles);
-            newsContent.Sequence = _context.NewsContents.Count(m => m.NewsId == newsContent.NewsId);
             newsContent.ContentDate = DateTime.Now;
-            newsContent.ContentType = "img";
-            newsContent.ContentUser = newsContentDTO.ContentUser;
+            newsContent.NewsHeaderId = 1;
+            newsContent.Sequence = _context.NewsContents.Count(m => m.NewsHeaderId == newsContent.NewsHeaderId);
             _context.NewsContents.Add(newsContent);
             await _context.SaveChangesAsync();
             return Ok(newsContent);
-        }
-        [HttpPost("/text")]
-        public async Task<ActionResult<NewsContentDTO>> PostTextContent(NewsContentDTO newsContentDTO)
-        {
-            NewsContent newsContent = new NewsContent();
-            newsContent.NewsId = newsContentDTO.NewsId;
-            newsContent.Content = newsContentDTO.Content;
-            newsContent.Sequence = _context.NewsContents.Count(m => m.NewsId == newsContent.NewsId);
-            newsContent.ContentDate = DateTime.Now;
-            newsContent.ContentUser = newsContentDTO.ContentUser;
-            _context.NewsContents.Add(newsContent);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("GetNewsContent", new { id = newsContent.Id }, newsContent);
         }
         [NonAction]
         public async Task<string> SaveImage(IFormFile imageFile)

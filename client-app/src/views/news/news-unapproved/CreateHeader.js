@@ -1,4 +1,3 @@
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,9 +6,10 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
-import { CloseIcon, AddIcon } from "@mui/icons-material";
-export default function CreateHeader(props) {
-    const [
+import  AddIcon  from "@mui/icons-material/Add";
+import  CloseIcon  from "@mui/icons-material/Close";
+ function CreateHeader(props) {
+    const {
       open,
       handleClose,
       addNewsHeader,
@@ -18,7 +18,7 @@ export default function CreateHeader(props) {
       show,
       handleChangeTitle,
       handleChangeDesc,
-    ] = props;
+     } = props;
   return (
     <>
       <Dialog open={open} onClose={handleClose}>
@@ -79,3 +79,5 @@ export default function CreateHeader(props) {
     </>
   );
 }
+
+export default CreateHeader;
