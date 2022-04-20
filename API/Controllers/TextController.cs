@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Namespace
@@ -38,11 +39,14 @@ namespace Namespace
             {
                 return BadRequest();
             }
-            var model = await _context.NewsContents.FindAsync(id);
+            var model = await _context.NewsContents.FirstOrDefaultAsync(m => m.Id == id);
+
             model.Content = newsContent.Content;
+            model.Content = "txt";
+            model.ContentUser = "An";
             _context.NewsContents.Update(model);
             await _context.SaveChangesAsync();
-            return Ok(model);
+            return Ok(newsContent);
         }
     }
 }

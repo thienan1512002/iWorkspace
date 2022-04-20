@@ -8,20 +8,47 @@ import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { DropzoneDialog } from "material-ui-dropzone";
+import Button from "@mui/material/Button";
+import useAuth from "hooks/useAuth";
+import axios from "axios";
+
 function UpdateContent(props) {
-  const {
+  let {
     open,
     handleClose,
-    addNewsHeader,
+    newsHeaderId,
     show,
     contentType,
     content,
     handleChange,
     update,
+    handleImageContent,
+    id,
   } = props;
+  const user = useAuth();
+  const updateImageContent = (e) => {
+    e.preventDefault();
+    let formData = new FormData();
+    formData.append("id", id);
+    formData.append("imageFiles", e.target[0].files[0]);
+    formData.append("imageSrc", e.target[0].files[0].name);
+    formData.append("newsHeaderId", newsHeaderId);
+    formData.append("contentType", contentType);
+    formData.append("contentUser", user.user.name);
+    axios
+      .put("https://localhost:5001/api/newscontents/" + id, formData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(formData);
+  };
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>
           <Box display="flex" alignItems="center">
             <Box flexGrow={1}>Update Content</Box>
@@ -44,26 +71,69 @@ function UpdateContent(props) {
               variant="outlined"
               value={content}
               multiline
-              minRows={20}
-              minColumns={10}
+              minRows={10}
               onChange={handleChange}
             />
           ) : (
-            "Img"
+            // <form onSubmit={updateImageContent}>
+            //   <input type="file" />
+            //   <Button variant="contained" color="success" type="submit">
+            //     Submit
+            //   </Button>
+            // </form>
+            <form onSubmit={handleImageContent}>
+              <DropzoneDialog
+                acceptedFiles={["image/*"]}
+                cancelButtonText={"cancel"}
+                submitButtonText={"submit"}
+                maxFileSize={5000000}
+                open={open}
+                onClose={handleClose}
+                onSave={
+                  ((files) => {
+                    let formData = new FormData();
+                    formData.append("id", id);
+                    formData.append("imageFiles", files[0]);
+                    formData.append("imageSrc", files[0].name);
+                    formData.append("newsHeaderId", newsHeaderId);
+                    formData.append("contentType", contentType);
+                    formData.append("contentUser", user.user.name);
+                    axios
+                      .put(
+                        "https://localhost:5001/api/newscontents/" + id,
+                        formData
+                      )
+                      .then((response) => {
+                        console.log(response);
+                      })
+                      .catch((error) => {});
+                  },
+                  handleClose)
+                }
+                showPreviews={true}
+                showFileNamesInPreview={true}
+              />
+              <br />
+              <br />
+            </form>
           )}
         </DialogContent>
-        <DialogActions>
-          <Fab
-            variant="extended"
-            size="medium"
-            color="success"
-            aria-label="add"
-            onClick={update}
-          >
-            <AddIcon />
-            Update
-          </Fab>
-        </DialogActions>
+        {contentType === "txt" ? (
+          <DialogActions>
+            <Fab
+              variant="extended"
+              size="medium"
+              color="success"
+              aria-label="add"
+              onClick={update}
+            >
+              <AddIcon />
+              Update
+            </Fab>
+          </DialogActions>
+        ) : (
+          ""
+        )}
       </Dialog>
     </>
   );

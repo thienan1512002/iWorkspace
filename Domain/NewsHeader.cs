@@ -20,7 +20,7 @@ namespace Domain
 
         public Boolean Approved { get; set; }
         public Boolean IsFinished { get; set; }
-
+        public int Priority { get; set; }
         public ICollection<NewsContent> NewsContents { get; set; }
 
     }

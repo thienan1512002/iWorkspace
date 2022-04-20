@@ -15,12 +15,13 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    NewsTitle = table.Column<string>(type: "nvarchar", nullable: false , maxLength:3000),
+                    NewsTitle = table.Column<string>(type: "nvarchar", nullable: false, maxLength: 3000),
                     NewsDesc = table.Column<string>(type: "nvarchar", nullable: false, maxLength: 3000),
                     NewsDate = table.Column<DateTime>(type: "Datetime", nullable: true),
-                    NewsUser = table.Column<string>(type: "nvarchar", nullable: false , maxLength: 300),
+                    NewsUser = table.Column<string>(type: "nvarchar", nullable: false, maxLength: 300),
                     Approved = table.Column<bool>(type: "bit", nullable: false),
-                    IsFinished = table.Column<bool>(type: "bit", nullable: false)
+                    IsFinished = table.Column<bool>(type: "bit", nullable: false),
+                    Priority = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -37,7 +38,7 @@ namespace Persistence.Migrations
                     Sequence = table.Column<int>(type: "INTEGER", nullable: false),
                     Content = table.Column<string>(type: "nvarchar", nullable: false, maxLength: 3000),
                     ContentType = table.Column<string>(type: "TEXT", nullable: false),
-                    ContentUser = table.Column<string>(type: "nvarchar", nullable: false , maxLength: 300),
+                    ContentUser = table.Column<string>(type: "nvarchar", nullable: false, maxLength: 300),
                     ContentDate = table.Column<DateTime>(type: "Datetime", nullable: false)
                 },
                 constraints: table =>
@@ -48,7 +49,7 @@ namespace Persistence.Migrations
                         column: x => x.NewsHeaderId,
                         principalTable: "NewsHeaders",
                         principalColumn: "Id");
-                        //onDelete: ReferentialAction.Cascade);
+                    //onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

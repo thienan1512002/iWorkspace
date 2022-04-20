@@ -33,39 +33,19 @@ namespace API.Controllers
             return await _context.NewsContents.Where(m => m.NewsHeaderId == id).ToListAsync();
         }
 
-        [Authorize]
+        // [Authorize]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNewsContent(int id, [FromForm] NewsContent newsContent)
+        public async Task<ActionResult<NewsContent>> PutNewsContent(int id, [FromForm] NewsContentDTO newsContent)
         {
-
+            var model = await _context.NewsContents.FirstOrDefaultAsync(m => m.Id == id);
             if (id != newsContent.Id)
             {
                 return BadRequest();
             }
-            //newsContent.Content = await SaveImage(newsContent.ImageFile);
-            newsContent.NewsHeaderId = 1;
-            newsContent.ContentDate = DateTime.Now;
-            newsContent.ContentType = "img";
-            newsContent.Sequence = 1;
-            _context.NewsContents.Add(newsContent);
+            DeleteImage(model.Content);
+            model.Content = await SaveImage(newsContent.ImageFiles);
+            _context.NewsContents.Update(model);
             await _context.SaveChangesAsync();
-            _context.Entry(newsContent).State = EntityState.Modified;
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!NewsContentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
             return NoContent();
         }
 
@@ -142,6 +122,14 @@ namespace API.Controllers
                 await imageFile.CopyToAsync(fileStream);
             }
             return imageName;
+        }
+
+        [NonAction]
+        public void DeleteImage(string imageName)
+        {
+            var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "Images", imageName);
+            if (System.IO.File.Exists(imagePath))
+                System.IO.File.Delete(imagePath);
         }
         // DELETE: api/NewsContents/5
         [Authorize]

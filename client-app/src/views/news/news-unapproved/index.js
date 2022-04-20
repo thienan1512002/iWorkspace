@@ -20,6 +20,7 @@ export default function NewsUnApproved() {
   const [txtTitle, setTitle] = React.useState("");
   const [txtDesc, setDesc] = React.useState("");
   const [show, setShow] = React.useState(false);
+  const [priority, setPriority] = React.useState(null);
   const user = useAuth();
   const redirect = useNavigate();
   React.useEffect(() => {
@@ -44,6 +45,7 @@ export default function NewsUnApproved() {
         newsTitle: txtTitle,
         newsDesc: txtDesc,
         newsUser: user.user.name,
+        priority: priority,
       })
       .then((res) => {
         console.log(res);
@@ -154,10 +156,10 @@ export default function NewsUnApproved() {
       <Grid container>
         {news &&
           news
-            .sort((a, b) => b.id - a.id && a.approved - b.approved)
+            .sort((a, b) => a.priority > b.priority)
             .map((element) => {
               return (
-                <Grid item  key={element.id}>
+                <Grid item key={element.id}>
                   <CardNews
                     newsTitle={element.newsTitle}
                     newsDesc={element.newsDesc}
@@ -168,7 +170,11 @@ export default function NewsUnApproved() {
                     toggleApprove={() => toggleApprove(element.id)}
                     checkFinished={() => checkFinished(element.id)}
                     seeDetails={() => seeDetails(element.id)}
-                    updated = {()=> redirect("/news/news-unapproved/update-content/"+element.id)}
+                    updated={() =>
+                      redirect(
+                        "/news/news-unapproved/update-content/" + element.id
+                      )
+                    }
                   />
                 </Grid>
               );
@@ -182,6 +188,10 @@ export default function NewsUnApproved() {
           show={show}
           handleChangeTitle={handleChangeTitle}
           handleChangeDesc={handleChangeDesc}
+          prioprity={priority}
+          handlePrioChange={(e) => {
+            setPriority(e.target.value);
+          }}
         />
       </Grid>
       <ToastContainer />

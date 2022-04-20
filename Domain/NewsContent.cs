@@ -19,6 +19,7 @@ namespace Domain
 
         //public virtual NewsHeader News { get; set; }
         public DateTime ContentDate { get; set; }
+        
 
 
     }
