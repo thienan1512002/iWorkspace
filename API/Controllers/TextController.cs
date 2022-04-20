@@ -29,5 +29,20 @@ namespace Namespace
             await _context.SaveChangesAsync();
             return Ok(newsContent);
         }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<ActionResult<NewsContent>> PutTextContent(int id, NewsContent newsContent)
+        {
+            if (id != newsContent.Id)
+            {
+                return BadRequest();
+            }
+            var model = await _context.NewsContents.FindAsync(id);
+            model.Content = newsContent.Content;
+            _context.NewsContents.Update(model);
+            await _context.SaveChangesAsync();
+            return Ok(model);
+        }
     }
 }

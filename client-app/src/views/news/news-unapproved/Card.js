@@ -22,6 +22,7 @@ function CardNews(props) {
     isFinished,
     checkFinished,
     seeDetails,
+    updated,
   } = props;
 
   return (
@@ -91,6 +92,7 @@ function CardNews(props) {
             color="warning"
             variant="contained"
             disabled={isFinished}
+            onClick={updated}
           >
             <ModeEditOutlineIcon />
           </Button>

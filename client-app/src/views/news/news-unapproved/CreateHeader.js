@@ -48,7 +48,6 @@ import  CloseIcon  from "@mui/icons-material/Close";
             variant="outlined"
           />
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="News description"

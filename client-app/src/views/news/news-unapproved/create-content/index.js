@@ -8,15 +8,19 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextareaAutosize from "@mui/material/TextareaAutosize";
+import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { DropzoneDialog } from "material-ui-dropzone";
 import Grid from "@mui/material/Grid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
 
 const url = "https://localhost:5001/api/text/";
+
 const urlImg = "https://localhost:5001/api/newscontents/";
+
 function CreateNewsContent() {
   const user = useAuth();
   const { id } = useParams();
@@ -25,7 +29,7 @@ function CreateNewsContent() {
   const [disable, setDisable] = useState(false);
   const [txtContent, setTxtContent] = useState(null);
   const [file, setFile] = useState(null);
-  const ref = useRef();
+  const redirect = useNavigate();
   const handleTextContent = (e) => {
     e.preventDefault();
     axios
@@ -71,7 +75,8 @@ function CreateNewsContent() {
           labelId="demo-simple-select-label"
           label="Text Content"
           variant="outlined"
-          minRows={10}
+          minRows={20}
+          multiline
           value={txtContent}
           style={{ width: 500, marginBottom: "10px" }}
           onChange={(e) => setTxtContent(e.target.value)}
@@ -120,11 +125,13 @@ function CreateNewsContent() {
     setOpen(true);
   };
   return (
-    <div className="container">
+    <>
       <Grid container>
         <Grid item xs={12} md={6} lg={4}></Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <FormControl fullWidth disabled={disable}>
+          <br></br>
+         <Typography variant="h3" component="h2" align="center">Select type of Content</Typography>
+          <FormControl fullWidth disabled={disable} sx={{mt:"10px"}}>
             <InputLabel id="demo-simple-select-label">Type</InputLabel>
             <Select
               labelId="demo-simple-select-label"
@@ -144,11 +151,12 @@ function CreateNewsContent() {
         <Grid item xs={12} md={6} lg={4}></Grid>
         <Grid item xs={12} md={6} lg={4}>
           {content}
+          <Button onClick={()=>redirect("/news/news-unapproved")} size="medium" color="primary" variant="contained">Back</Button>
         </Grid>
         <Grid item xs={12} md={6} lg={4}></Grid>
       </Grid>
       <ToastContainer />
-    </div>
+    </>
   );
 }
 

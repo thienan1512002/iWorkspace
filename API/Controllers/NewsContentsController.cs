@@ -69,7 +69,7 @@ namespace API.Controllers
             return NoContent();
         }
 
-        [Authorize]
+
         [HttpPut("increase/{id}")]
         public async Task<IActionResult> DnDUpdate(int id)
         {
@@ -83,8 +83,8 @@ namespace API.Controllers
             {
                 return NotFound();
             }
-            model.Sequence++;
             var current = await _context.NewsContents.FirstOrDefaultAsync(m => m.Sequence == model.Sequence + 1);
+            model.Sequence++;
             current.Sequence--;
             _context.NewsContents.Update(model);
             await _context.SaveChangesAsync();
@@ -93,6 +93,28 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [HttpPut("decrease/{id}")]
+        public async Task<IActionResult> DnUpdate(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var model = await _context.NewsContents.FirstOrDefaultAsync(m => m.Id == id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            var current = await _context.NewsContents.FirstOrDefaultAsync(m => m.Sequence == model.Sequence - 1);
+            model.Sequence--;
+            current.Sequence++;
+            _context.NewsContents.Update(model);
+            await _context.SaveChangesAsync();
+            _context.NewsContents.Update(current);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<NewsContentDTO>> PostImgContent([FromForm] NewsContentDTO newsContentDTO)

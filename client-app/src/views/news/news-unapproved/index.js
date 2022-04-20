@@ -157,7 +157,7 @@ export default function NewsUnApproved() {
             .sort((a, b) => b.id - a.id && a.approved - b.approved)
             .map((element) => {
               return (
-                <Grid item xs={12} md={6} lg={4} key={element.id}>
+                <Grid item  key={element.id}>
                   <CardNews
                     newsTitle={element.newsTitle}
                     newsDesc={element.newsDesc}
@@ -168,6 +168,7 @@ export default function NewsUnApproved() {
                     toggleApprove={() => toggleApprove(element.id)}
                     checkFinished={() => checkFinished(element.id)}
                     seeDetails={() => seeDetails(element.id)}
+                    updated = {()=> redirect("/news/news-unapproved/update-content/"+element.id)}
                   />
                 </Grid>
               );
