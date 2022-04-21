@@ -67,7 +67,7 @@ export default function NewsUnApproved() {
   const redirect = useNavigate();
   React.useEffect(() => {
     loadData();
-  }, []);
+  }, [news]);
 
   const loadData = () => {
     axios

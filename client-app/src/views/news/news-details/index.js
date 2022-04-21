@@ -16,7 +16,7 @@ function Content() {
       setContents(data.data);
       console.log(contents);
     });
-  }, []);
+  }, [contents]);
   //console.log(contents);
   return (
     <Grid container>
@@ -31,7 +31,7 @@ function Content() {
                   locale: vnVNLocale,
                 })}
               </h4>
-              <p align="center">{content.newsDesc}</p>
+              <h4 align="center">{content.newsDesc}</h4>
               {content.newsContents.map((item) => {
                 if (item.contentType === "img") {
                   return (
@@ -42,13 +42,13 @@ function Content() {
                         display: "block",
                         marginLeft: "auto",
                         marginRight: "auto",
-                        width: "auto",
-                        height: "auto",
+                        maxWidth: "100%",
+                        maxHeight: "100%",
                       }}
                     />
                   );
                 } else {
-                  return <p>{item.content}</p>;
+                  return <h3>{item.content}</h3>;
                 }
               })}
             </Grid>
