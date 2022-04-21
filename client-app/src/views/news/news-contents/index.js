@@ -29,14 +29,19 @@ function News() {
 
   return (
     <>
-      <Grid container>
+      <Grid
+        container
+        direction="rows"
+        alignItems="center"
+        justifyContent="center"
+      >
         {news &&
           news
             .sort((a, b) => b.id - a.id)
             .filter((c) => c.approved === true)
             .map((element) => {
               return (
-                <Grid item xs={12} md={6} lg={4} key={element.id}>
+                <Grid item key={element.id}>
                   <CardNews
                     newsTitle={element.newsTitle}
                     newsDesc={element.newsDesc}

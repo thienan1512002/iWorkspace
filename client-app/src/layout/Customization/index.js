@@ -14,6 +14,7 @@ import Layout from './Layout';
 import PresetColor from './PresetColor';
 import FontFamily from './FontFamily';
 import BoxContainer from './BoxContainer';
+import NewsTemplate from './NewsTemplate';
 import AnimateButton from 'ui-component/extended/AnimateButton';
 import { gridSpacing } from 'store/constant';
 
@@ -91,6 +92,9 @@ const Customization = () => {
                             <Grid item xs={12}>
                                 {/* box container */}
                                 <BoxContainer />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <NewsTemplate/>
                             </Grid>
                         </Grid>
                     </PerfectScrollbar>

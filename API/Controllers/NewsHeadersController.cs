@@ -121,6 +121,7 @@ namespace API.Controllers
             newsHeader.NewsTitle = newsHeaderDTO.NewsTitle;
             newsHeader.NewsDesc = newsHeaderDTO.NewsDesc;
             newsHeader.NewsUser = newsHeaderDTO.NewsUser;
+            newsHeader.Priority = newsHeaderDTO.Priority;
             _context.NewsHeaders.Add(newsHeader);
             await _context.SaveChangesAsync();
 

@@ -30,7 +30,7 @@ function CardNews(props) {
       <Card
         sx={{
           width: 350,
-          height: 350,
+          height: 400,
           margin: "5px",
           display: "flex",
           justifyContent: "space-between",
@@ -49,7 +49,7 @@ function CardNews(props) {
             })}{" "}
             giờ {format(new Date(newsDate), "mm", { locale: vnVNLocale })} phút
           </Typography>
-          <Typography variant="h5" component="div" align="center">
+          <Typography variant="h3" component="div" align="center">
             {newsTitle}
           </Typography>
           <Typography color="text.secondary" align="center">

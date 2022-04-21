@@ -15,7 +15,8 @@ const initialState = {
     onChangeContainer: () => {},
     onChangeFontFamily: () => {},
     onChangeBorderRadius: () => {},
-    onChangeOutlinedField: () => {}
+    onChangeOutlinedField: () => {},
+    onChangeNewsTemplate: () => {},
 };
 
 // ==============================|| CONFIG CONTEXT & PROVIDER ||============================== //
@@ -30,7 +31,8 @@ function ConfigProvider({ children }) {
         navType: initialState.navType,
         presetColor: initialState.presetColor,
         locale: initialState.locale,
-        rtlLayout: initialState.rtlLayout
+        rtlLayout: initialState.rtlLayout,
+        newsTemplate : initialState.newsTemplate,
     });
 
     const onChangeMenuType = (navType) => {
@@ -89,22 +91,30 @@ function ConfigProvider({ children }) {
         });
     };
 
+    const onChangeNewsTemplate = (newsTemplate)=>{
+        setConfig({
+            ...config,
+            newsTemplate
+        })
+    }
+
     return (
-        <ConfigContext.Provider
-            value={{
-                ...config,
-                onChangeMenuType,
-                onChangePresetColor,
-                onChangeLocale,
-                onChangeRTL,
-                onChangeContainer,
-                onChangeFontFamily,
-                onChangeBorderRadius,
-                onChangeOutlinedField
-            }}
-        >
-            {children}
-        </ConfigContext.Provider>
+      <ConfigContext.Provider
+        value={{
+          ...config,
+          onChangeMenuType,
+          onChangePresetColor,
+          onChangeLocale,
+          onChangeRTL,
+          onChangeContainer,
+          onChangeFontFamily,
+          onChangeBorderRadius,
+          onChangeOutlinedField,
+          onChangeNewsTemplate,
+        }}
+      >
+        {children}
+      </ConfigContext.Provider>
     );
 }
 

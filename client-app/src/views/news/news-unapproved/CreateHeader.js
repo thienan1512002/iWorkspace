@@ -27,7 +27,7 @@ function CreateHeader(props) {
   } = props;
   return (
     <>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} height={500}>
         <DialogTitle>
           <Box display="flex" alignItems="center">
             <Box flexGrow={1}>Tạo tin mới</Box>
@@ -57,6 +57,8 @@ function CreateHeader(props) {
             label="Mô tả tin"
             type="text"
             fullWidth
+            multiline
+            minRows={3}
             value={txtDesc}
             onChange={handleChangeDesc}
             variant="outlined"

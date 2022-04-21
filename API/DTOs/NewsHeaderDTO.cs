@@ -9,6 +9,7 @@ namespace API.DTOs
         public string NewsUser { get; set; }
         public Boolean Approved { get; set; }
         public Boolean IsFinished { get; set; }
+        public int Priority { get; set; }
         public ICollection<NewsContentDTO> NewsContentsDTO { get; set; }
     }
 }
