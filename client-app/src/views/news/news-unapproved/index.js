@@ -248,6 +248,9 @@ export default function NewsUnApproved() {
               toggleApprove={toggleApprove}
               updated={checkFinished}
               details={seeDetails}
+              update={(id) =>
+                redirect("/news/news-unapproved/update-content/" + id)
+              }
             />
           </Grid>
           <Grid item></Grid>

@@ -32,7 +32,7 @@ function Content() {
       setContents(response.data);
       console.log(response.data);
     });
-  }, []);
+  });
   const back = (id) => {
     axios
       .put("https://localhost:5001/api/NewsContents/increase/" + id)
@@ -167,7 +167,6 @@ function Content() {
           }}
           id={data.id}
           newsHeaderId={data.newsHeaderId}
-          
         />
       </Grid>
     </>

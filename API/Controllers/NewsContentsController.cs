@@ -46,7 +46,7 @@ namespace API.Controllers
             model.Content = await SaveImage(newsContent.ImageFiles);
             _context.NewsContents.Update(model);
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(model);
         }
 
 

@@ -13,9 +13,10 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import InfoIcon from "@mui/icons-material/Info";
 import { format } from "date-fns";
 import vnVNLocale from "date-fns/locale/vi";
+import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 
 function TableNews(props) {
-  const { rows, toggleApprove, updated, details } = props;
+  const { rows, toggleApprove, updated, details, update } = props;
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 400 }} aria-label="simple table">
@@ -28,6 +29,7 @@ function TableNews(props) {
             <TableCell>Tình trạng</TableCell>
             <TableCell>Hoàn thành</TableCell>
             <TableCell>Chi tiết tin</TableCell>
+            <TableCell>Thay đổi nội dung</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -82,6 +84,16 @@ function TableNews(props) {
                   onClick={() => details(row.id)}
                 >
                   <InfoIcon />
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button
+                  size="medium"
+                  color="primary"
+                  variant="contained"
+                  onClick={() => update(row.id)}
+                >
+                  <ModeEditOutlineIcon />
                 </Button>
               </TableCell>
             </TableRow>

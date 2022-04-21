@@ -42,7 +42,6 @@ namespace Namespace
             var model = await _context.NewsContents.FirstOrDefaultAsync(m => m.Id == id);
 
             model.Content = newsContent.Content;
-            model.Content = "txt";
             model.ContentUser = "An";
             _context.NewsContents.Update(model);
             await _context.SaveChangesAsync();

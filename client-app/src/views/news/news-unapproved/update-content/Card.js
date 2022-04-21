@@ -48,7 +48,7 @@ function CardNews(props) {
             {contentType === "txt" ? "Text" : "Image"}
           </Typography>
           {contentType === "txt" ? (
-            <Typography variant="h5" align="center">
+            <Typography variant="h5" align="center" noWrap>
               {content}
             </Typography>
           ) : (

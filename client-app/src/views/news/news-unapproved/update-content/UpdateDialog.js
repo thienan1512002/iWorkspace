@@ -11,7 +11,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { DropzoneDialog } from "material-ui-dropzone";
 import Button from "@mui/material/Button";
 import useAuth from "hooks/useAuth";
-import axios from "axios";
+import axios from "utils/axios";
 
 function UpdateContent(props) {
   let {
@@ -75,47 +75,47 @@ function UpdateContent(props) {
               onChange={handleChange}
             />
           ) : (
-            // <form onSubmit={updateImageContent}>
-            //   <input type="file" />
-            //   <Button variant="contained" color="success" type="submit">
-            //     Submit
-            //   </Button>
-            // </form>
-            <form onSubmit={handleImageContent}>
-              <DropzoneDialog
-                acceptedFiles={["image/*"]}
-                cancelButtonText={"cancel"}
-                submitButtonText={"submit"}
-                maxFileSize={5000000}
-                open={open}
-                onClose={handleClose}
-                onSave={
-                  ((files) => {
-                    let formData = new FormData();
-                    formData.append("id", id);
-                    formData.append("imageFiles", files[0]);
-                    formData.append("imageSrc", files[0].name);
-                    formData.append("newsHeaderId", newsHeaderId);
-                    formData.append("contentType", contentType);
-                    formData.append("contentUser", user.user.name);
-                    axios
-                      .put(
-                        "https://localhost:5001/api/newscontents/" + id,
-                        formData
-                      )
-                      .then((response) => {
-                        console.log(response);
-                      })
-                      .catch((error) => {});
-                  },
-                  handleClose)
-                }
-                showPreviews={true}
-                showFileNamesInPreview={true}
-              />
-              <br />
-              <br />
+            <form onSubmit={updateImageContent}>
+              <input type="file" />
+              <Button variant="contained" color="success" type="submit">
+                Submit
+              </Button>
             </form>
+            // <form onSubmit={handleImageContent}>
+            //   <DropzoneDialog
+            //     acceptedFiles={["image/*"]}
+            //     cancelButtonText={"cancel"}
+            //     submitButtonText={"submit"}
+            //     maxFileSize={5000000}
+            //     open={open}
+            //     onClose={handleClose}
+            //     onSave={
+            //       ((files) => {
+            //         let formData = new FormData();
+            //         formData.append("id", id);
+            //         formData.append("imageFiles", files[0]);
+            //         formData.append("imageSrc", files[0].name);
+            //         formData.append("newsHeaderId", newsHeaderId);
+            //         formData.append("contentType", contentType);
+            //         formData.append("contentUser", user.user.name);
+            //         axios
+            //           .put(
+            //             "https://localhost:5001/api/newscontents/" + id,
+            //             formData
+            //           )
+            //           .then((response) => {
+            //             console.log(response);
+            //           })
+            //           .catch((error) => {});
+            //       },
+            //       handleClose)
+            //     }
+            //     showPreviews={true}
+            //     showFileNamesInPreview={true}
+            //   />
+            //   <br />
+            //   <br />
+            // </form>
           )}
         </DialogContent>
         {contentType === "txt" ? (
